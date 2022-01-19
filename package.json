@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --reporter spec",
+    "start": "set PORT=3030 && nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,15 @@
   },
   "homepage": "https://github.com/taopan2007/Group_work#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "chai": "^4.3.4",
+    "commander": "^8.3.0",
+    "express": "^4.17.2",
+    "http-post": "^0.1.1",
+    "http-proxy": "^1.18.1",
+    "mocha": "^9.1.4",
+    "mongodb": "^4.3.1",
+    "request": "^2.88.2",
+    "socket.io": "^4.4.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
