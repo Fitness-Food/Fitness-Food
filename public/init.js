@@ -10,10 +10,16 @@ socket.on('newConnection', msg => {
 $(document).ready(() => {
     console.log('page ready');
     $.get(REQ_INIT, (res) => {
-        if(res.statusCode != 200) 
+        if(res.statusCode != 200) {
+            console.log('page init failed!');
             return null
+        }
         let result = res.result
-        //$(#)
+        //
+        $("#nav_bar").load('./components/navbar.html', () => {
+            $('.scrollspy').scrollSpy()
+        })
+        $("#footer").load('./components/footer.html')
     })
     
 })

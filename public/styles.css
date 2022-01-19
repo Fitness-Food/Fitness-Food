@@ -12,3 +12,15 @@ header {
 main {
     flex: 1 0 auto;
 }
+
+.page-header {
+    background-color: transparent;
+}
+
+#heroArea {
+    width: 100%;
+    background-size: cover;
+    background-image: url('./assets/hero.jpg');
+    background-repeat: no-repeat no-repeat;
+    padding-bottom: 39.53%;
+}
