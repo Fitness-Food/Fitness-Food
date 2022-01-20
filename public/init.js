@@ -16,6 +16,9 @@ $(document).ready(() => {
         }
         let result = res.result
         //
+        $("#heroArea").append(createHero(result))
+        $("#dailyArea").append(createDailyTable(result))
+        $("#weeklyArea").append(createWeeklyTable(result))
         $("#nav_bar").load('./components/navbar.html', () => {
             $('.scrollspy').scrollSpy()
         })

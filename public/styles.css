@@ -18,9 +18,77 @@ main {
 }
 
 #heroArea {
+    position: relative;
     width: 100%;
+    height: 40vh;
     background-size: cover;
     background-image: url('./assets/hero.jpg');
-    background-repeat: no-repeat no-repeat;
-    padding-bottom: 39.53%;
+    background-repeat: no-repeat;
+}
+
+.displayArea {
+    width: 80vw;
+    height: 40vh;
+}
+
+.hero-title {
+    font-size: 1rem;
+    font-weight: bolder;
+}
+
+.heroDisplay {
+    width: 60vw;
+}
+
+#user-name {
+    background-color: #fafafa;
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    box-shadow: 1rem;
+    padding: 15px;
+}
+
+#BMI-value {
+    background-color: #F6C12C;
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    padding: 15px;
+}
+
+#cal-value {
+    background-color: #000000;
+    color: #F6C12C;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    padding: 15px;
+}
+
+
+@media (min-width: 768px) {
+    .hero-title {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+}
+
+.FontType {
+    color: black;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+.pColor {
+    color: white;
 }
