@@ -1,3 +1,8 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
 body {
     display: flex;
     min-height: 100vh;
@@ -13,6 +18,34 @@ main {
     flex: 1 0 auto;
 }
 
+h5 {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+table, td, th, tr  {
+    border-collapse: collapse;
+    text-align: center;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+th {
+    font-size: 1.5rem;
+}
+
 .page-header {
     background-color: transparent;
 }
@@ -20,24 +53,31 @@ main {
 #hero_area {
     position: relative;
     width: 100%;
-    height: 40vh;
+    padding:0!important;
     background-size: cover;
     background-image: url('./assets/hero.jpg');
     background-repeat: no-repeat;
 }
 
 .displayArea {
-    width: 80vw;
-    height: 40vh;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0!important;
+    margin: 0 auto;
 }
 
 .hero-title {
     font-size: 1rem;
     font-weight: bolder;
+    padding-top: 75px;
 }
 
 .heroDisplay {
-    width: 60vw;
+    display: flex;
+    align-items: flex-end;
+    margin: 45px auto 0;
 }
 
 #user-name {
@@ -75,6 +115,36 @@ main {
     color: white;
 }
 
+.cube1 {
+    width: 100%;
+    height: 100%;
+    background-color: #F6C12C;
+}
+
+.cube1 .title {
+    color: black;
+}
+
+.cube1 .number {
+    color: white;
+    font-weight: bold;
+}
+
+.cube2 {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+.cube2 .title {
+    color: black;
+}
+
+.cube2 .number {
+    color: #F6C12C;
+    font-weight: bold;
+}
+
 @media (min-width: 768px) {
     .hero-title {
         font-size: 1rem;
@@ -100,4 +170,8 @@ main {
 }
 .pColor {
     color: white;
+}
+
+.testB {
+    border: 1px red solid;
 }
