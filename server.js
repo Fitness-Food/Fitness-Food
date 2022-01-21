@@ -12,7 +12,7 @@ app.use(express.json())
 app.use('/api', routers)
 
 app.get('/meal', (req, res) => {
-    res.sendFile(path.join(__dirname, ))
+    res.sendFile(path.join(__dirname, '/public/meal'))
 })
 
 io.on('connection', (socket) => {
