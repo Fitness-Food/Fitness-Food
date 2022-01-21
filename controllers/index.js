@@ -1,3 +1,4 @@
 module.exports = {
-    page: require('./pageController')
+    homePage: require('./homePageController'),
+    mealPage: require('./mealPageController')
 }

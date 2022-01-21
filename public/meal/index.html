@@ -9,14 +9,27 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="./styles.css" rel="stylesheet">
+        <link href="../styles.css" rel="stylesheet">
     </head>
 
     <body>
         <header id='nav_bar' class="page-header scrollspy"></header>
         
         <main>
+            <div id="hero_area" class="row section"></div>
             <div class="container">
-                This is home page
+                <div class="row">
+                    <div class="col s2 FontType">
+                        <p>Daily<br/>Plan</p>
+                    </div>
+                    <div id="daily_area" class="col s10"></div>
+                </div>
+                <div class="row">
+                    <div class="col s2 FontType">
+                        <p>Weekly<br/>Plan</p>
+                    </div>
+                    <div id="weekly_area" class="col s10"></div>
+                </div>
             </div>
         </main>
 
@@ -25,7 +38,8 @@
         <script src="/socket.io/socket.io.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script src="./components/widgets.js"></script>
+        <script src="../components/widgets.js"></script>
+        <script src="../components/mealPageWidgets.js"></script>
         <script src="./init.js"></script>
     </body>
 

@@ -11,6 +11,10 @@ app.use(express.static(__dirname + '/public'))
 app.use(express.json())
 app.use('/api', routers)
 
+app.get('/meal', (req, res) => {
+    res.sendFile(path.join(__dirname, ))
+})
+
 io.on('connection', (socket) => {
     let randomN = parseInt(Math.random() * 10)
     console.log(`-> a user connected: ${randomN}`);

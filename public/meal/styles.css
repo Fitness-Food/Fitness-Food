@@ -1,0 +1,177 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #fafafa;
+}
+
+header {
+    background-color: transparent;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+h5 {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+table, td, th, tr  {
+    border-collapse: collapse;
+    text-align: center;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+th {
+    font-size: 1.5rem;
+}
+
+.page-header {
+    background-color: transparent;
+}
+
+#hero_area {
+    position: relative;
+    width: 100%;
+    padding:0!important;
+    background-size: cover;
+    background-image: url('../assets/hero.jpg');
+    background-repeat: no-repeat;
+}
+
+.displayArea {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0!important;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 1rem;
+    font-weight: bolder;
+    padding-top: 75px;
+}
+
+.heroDisplay {
+    display: flex;
+    align-items: flex-end;
+    margin: 45px auto 0;
+}
+
+#user-name {
+    background-color: #fafafa;
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    box-shadow: 1rem;
+    padding: 15px;
+}
+
+#BMI-value {
+    background-color: #F6C12C;
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    padding: 15px;
+}
+
+#cal-value {
+    background-color: #000000;
+    color: #F6C12C;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    padding: 15px;
+}
+
+.footerStyle {
+    padding-top: 15vh;
+}
+
+.cprtStyle {
+    width: 100%;
+    height: 3vh;
+    color: white;
+}
+
+.cube1 {
+    width: 100%;
+    height: 100%;
+    background-color: #F6C12C;
+}
+
+.cube1 .title {
+    color: black;
+}
+
+.cube1 .number {
+    color: white;
+    font-weight: bold;
+}
+
+.cube2 {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+.cube2 .title {
+    color: black;
+}
+
+.cube2 .number {
+    color: #F6C12C;
+    font-weight: bold;
+}
+
+@media (min-width: 768px) {
+    .hero-title {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+}
+
+.FontType {
+    color: black;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+.pColor {
+    color: white;
+}
+
+.testB {
+    border: 1px red solid;
+}
