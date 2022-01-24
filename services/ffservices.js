@@ -1,12 +1,18 @@
 const client = require("../dbConnection")
 
 let pageCollection = null
+let mealsCollection = null
+let plansCollection = null
 
 const DB_NAME = "Fitness-food"
+const PAGE_COLLECTION = "page_text"
 const MEAL_COLLECTION = "meal_list"
+const ORDER_COLLECTION = "order_combination"
 
 setTimeout(() => {
-    pageCollection = client.mongoClient.db(DB_NAME).collection(MEAL_COLLECTION)
+    pageCollection = client.mongoClient.db(DB_NAME).collection(PAGE_COLLECTION)
+    mealsCollection = client.mongoClient.db(DB_NAME).collection(MEAL_COLLECTION)
+    plansCollection = client.mongoClient.db(DB_NAME).collection(ORDER_COLLECTION)
 }, 200);
 
 const getInitContent = (res) => {
@@ -19,6 +25,28 @@ const getInitContent = (res) => {
     })
 }
 
+const getMealsContent = (res) => {
+    mealsCollection.find().toArray((err, result) => {
+        console.log("-> send meals content");
+        if(err) {
+            throw err
+        }
+        res.send({result, statusCode: 200})
+    })
+}
+
+const getPlansContent = (res) => {
+    plansCollection.find().toArray((err, result) => {
+        console.log('-> send plans content');
+        if(err) {
+            throw err
+        }
+        res.send({result, statusCode: 200})
+    })
+}
+
 module.exports = {
-    getInitContent
+    getInitContent,
+    getMealsContent,
+    getPlansContent
 }

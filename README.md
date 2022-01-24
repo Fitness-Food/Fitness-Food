@@ -15,5 +15,6 @@ This page is a group work
 4. create a req for server in `server.js`: `app.get('/meal', (req, res) => {...})`
 5. modify the **MVC** related files if required (`routes / controllers / services` folders)
 
-==NOTICE: Please be aware to use the correct **path** (e.g. `../xx/yy` `./xx/yy`) when you create new folders / files==
+<mark>NOTICE: Please be aware to use the correct **path** (e.g. `../xx/yy` `./xx/yy`) when you create new folders/files</mark>
+
 ---
