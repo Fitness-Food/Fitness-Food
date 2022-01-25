@@ -1,11 +1,53 @@
 //let holder = "text holder"
+let cellCount = 0;
 
-const cube = (flag) => {
-    let style = flag ? "cube1" : "cube2"
+const getWKday = (num) => {
+    let wkday = null
+    switch(num) {
+        case 0:
+            wkday = "Mon"
+            break
+        case 1:
+            wkday = "Tue"
+            break
+        case 2:
+            wkday = "Wed"
+            break
+        case 3:
+            wkday = "Thu"
+            break
+        case 4:
+            wkday = "Fri"
+            break
+        case 5:
+            wkday = "Sat"
+            break
+        case 6:
+            wkday = "Sun"
+            break
+    }
+    return `
+        <div class="weekdayCube">
+            ${wkday}
+        </div>
+    `
+}
+
+const cube = (flag, item) => {
+    let style = flag ? "cube2" : "cube1"
     return `
         <div class=${style}>
-            <h5 class="title">meal name</h5>
-            <p class="number">number</p>
+            <h5 class="title">${"name"}</h5>
+            <p class="number">${"cal"} KJ</p>
+        </div>
+    `
+}
+
+const calCube = (flag) => {
+    let style = flag ? "cube2" : "cube1"
+    return `
+        <div class=${style}>
+            <div class="number">0 KJ</div>
         </div>
     `
 }
@@ -27,6 +69,7 @@ const createDailyTable = res => {
         <table cellpadding="0" cellspacing="0" >
             <thread>
                 <tr>
+                    <th></th>
                     <th>BREAKFAST</th>
                     <th>LUNCH</th>
                     <th>DINNER</th>
@@ -34,17 +77,47 @@ const createDailyTable = res => {
                     <th></th>
                 </tr>
             </thread>
-            <tbody>
-                <tr>
-                    <td>${cube(1)}</td>
-                    <td>${cube(0)}</td>
-                    <td>${cube(1)}</td>
-                    <td>${cube(0)}</td>
-                    <td>${ordCube()}</td>
-                </tr>
+            <tbody id="day_table">
             </tbody>
         </table>
     `
+}
+
+const createMealCells = (item, index) => {
+    return `
+        <td>${cube(index % 2, item)}</td>
+        <td>${cube((index + 1) % 2, item)}</td>
+        <td>${cube((index + 2) % 2, item)}</td>
+    `
+}
+
+const createWKTr = (item, index) => {
+    return `
+        <tr> 
+            <td>${getWKday(index)}</td>
+            ${createMealCells(item, index)}
+            <td>${calCube((index + 3) % 2)}</td>
+            ${(index != 6) ? `<td>${empCube()}</td>`: `<td>${ordCube()}</td>`}
+        </tr>`
+}
+
+const createMealTable = (res) => {
+    res.map((item, index) => {
+        $("#wk_table").append(createWKTr(item, index))
+    })
+}
+
+const createDayTr = (item) => {
+    let child = `
+        <tr>
+            <td>${empCube()}</td>
+            <td>${cube(0, item)}</td>
+            <td>${cube(1, item)}</td>
+            <td>${cube(0, item)}</td>
+            <td>${calCube(1)}</td>
+            <td>${ordCube()}</td>
+        </tr>`
+    $("#day_table").append(child)
 }
 
 const createWeeklyTable = res => {
@@ -52,6 +125,7 @@ const createWeeklyTable = res => {
         <table>
             <thread>
                 <tr>
+                    <th></th>
                     <th>BREAKFAST</th>
                     <th>LUNCH</th>
                     <th>DINNER</th>
@@ -59,50 +133,7 @@ const createWeeklyTable = res => {
                     <th></th>
                 </tr>
             </thread>
-            <tbody>
-                <tr> <!-- monday -->
-                    <td>${cube(1)}</td>
-                    <td>${cube(0)}</td>
-                    <td>${cube(1)}</td>
-                    <td>${cube(0)}</td>
-                    <td>${empCube()}</td>
-                </tr>
-                <tr> <!-- tuesday -->
-                    <td>${cube(0)}</td>
-                    <td>${cube(1)}</td>
-                    <td>${cube(0)}</td>
-                    <td>${cube(1)}</td>
-                    <td>${empCube()}</td>
-                </tr>
-                <tr> <!-- wednesday -->
-                    <td>${cube(1)}</td>
-                    <td>${cube(0)}</td>
-                    <td>${cube(1)}</td>
-                    <td>${cube(0)}</td>
-                    <td>${empCube()}</td>
-                </tr>
-                <tr> <!-- thursday -->
-                    <td>${cube(0)}</td>
-                    <td>${cube(1)}</td>
-                    <td>${cube(0)}</td>
-                    <td>${cube(1)}</td>
-                    <td>${empCube()}</td>
-                </tr>
-                <tr> <!-- wednesday -->
-                    <td>${cube(1)}</td>
-                    <td>${cube(0)}</td>
-                    <td>${cube(1)}</td>
-                    <td>${cube(0)}</td>
-                    <td>${ordCube()}</td>
-                </tr>
-                <tr> <!-- tal -->
-                    <td>${empCube()}</td>
-                    <td>${empCube()}</td>
-                    <td>${empCube()}</td>
-                    <td>${cube(1)}</td>
-                    <td>${empCube()}</td>
-                </tr>
-            </tbody>
+            <tbody id="wk_table"></tbody>
         </table>
     `
 }

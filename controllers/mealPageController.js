@@ -5,4 +5,18 @@ const getInitContent = (res) => {
     Service.FFServices.getInitContent(res)
 }
 
-module.exports = {getInitContent}
+const getMealsContent = (res) => {
+    console.log('-> controller: meals content');
+    Service.FFServices.getMealsContent(res)
+}
+
+const getPlansContent = (res) => {
+    console.log('-> controller: meal plans content');
+    Service.FFServices.getPlansContent(res)
+}
+
+module.exports = {
+    getInitContent,
+    getMealsContent,
+    getPlansContent
+}

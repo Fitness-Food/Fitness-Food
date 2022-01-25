@@ -115,9 +115,15 @@ th {
     color: white;
 }
 
-.cube1 {
+.cube1 .cube2 {
+    display: flex;
     width: 100%;
     height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.cube1 {
     background-color: #F6C12C;
 }
 
@@ -131,8 +137,6 @@ th {
 }
 
 .cube2 {
-    width: 100%;
-    height: 100%;
     background-color: white;
 }
 
@@ -143,6 +147,14 @@ th {
 .cube2 .number {
     color: #F6C12C;
     font-weight: bold;
+}
+
+.weekdayCube {
+    width: 15px;
+    line-height: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
+    margin: 0 auto;
 }
 
 @media (min-width: 768px) {
