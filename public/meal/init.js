@@ -1,10 +1,11 @@
 const REQ_INIT = "/api/mealInit"
 
-let dpResult = null
-let wpResult = null
-let breakMeals = null
-let lunchMeals = null
-let dinnerMeals = null
+let weekPlan = null
+let Meals = {
+    "breakfast": null,
+    "lunch": null,
+    "dinner": null
+}
 
 const post_meals_setting = {
     "url": "/api/getMeals",
@@ -23,6 +24,9 @@ const post_plans_setting = {
         "Content-Type": "application/json"
     },
 }
+
+//
+
 
 let socket = io()
 
@@ -46,6 +50,7 @@ $(document).ready(() => {
         $("#nav_bar").load('../components/navbar.html', () => {
             $('.scrollspy').scrollSpy()
         })
+        $('.modal').modal();
         $("#footer").load('../components/footer.html')
     })
 
@@ -55,9 +60,9 @@ $(document).ready(() => {
             console.log('-> client get meals data failed!');
             return null
         }
-        breakMeals = meals_res.result[0].meals
-        lunchMeals = meals_res.result[1].meals
-        dinnerMeals = meals_res.result[2].meals
+        Meals.breakfast = {"type": meals_res.result[0].meal_type,"sets": meals_res.result[0].meals}
+        Meals.lunch = {"type": meals_res.result[1].meal_type,"sets": meals_res.result[1].meals}
+        Meals.dinner = {"type": meals_res.result[2].meal_type,"sets": meals_res.result[2].meals}
 
         $.ajax(post_plans_setting).done((plan_res) => {
             //console.log('---> client get plans data: ', plan_res);
@@ -65,12 +70,17 @@ $(document).ready(() => {
                 console.log('-> client get plans data failed!');
                 return null
             }
-            dpResult = plan_res.result[0].day_order
-            wpResult = plan_res.result[0].week_order
-            console.log("== day plans: ", dpResult);
-            console.log("== week plans: ", wpResult);
-            createDayTr(wpResult)
-            createMealTable(wpResult)
+            weekPlan = plan_res.result[0].week_order
+
+            createDayTr(weekPlan, Meals)
+            createWeekTable(weekPlan, Meals)
+
+            createMealModal("day", Meals.breakfast)
+            createMealModal("wk", Meals.breakfast)
+            createMealModal("day", Meals.lunch)
+            createMealModal("wk", Meals.lunch)
+            createMealModal("day", Meals.dinner)
+            createMealModal("wk", Meals.dinner)
         })
     })    
 })

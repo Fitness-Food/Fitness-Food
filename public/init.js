@@ -10,7 +10,6 @@ socket.on('newConnection', msg => {
 $(document).ready(() => {
     console.log('page ready');
     $.get(REQ_INIT, (res) => {
-        console.log("??????");
         
         if(res.statusCode != 200) {
             console.log('page init failed!');
@@ -20,7 +19,6 @@ $(document).ready(() => {
         
         let result = res.result
         //
-        $("#hero_area").append(createHero(result))
         $("#nav_bar").load('./components/navbar.html', () => {
             $('.scrollspy').scrollSpy()
         })
