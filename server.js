@@ -19,6 +19,10 @@ app.get('/menu', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/menu'))
 })
 
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/register'))
+})
+
 io.on('connection', (socket) => {
     let randomN = parseInt(Math.random() * 10)
     console.log(`-> a user connected: ${randomN}`);
