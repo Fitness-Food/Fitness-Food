@@ -4,3 +4,13 @@
     background-color: lightgoldenrodyellow;
 }
 
+div.slogan {
+    width: 1000px;
+    height: 100px;
+    margin: 400px auto;
+    line-height: 100px;
+    text-align: center;
+    font-style: oblique;
+    font-weight: bold;
+    font-size:30px;
+}
