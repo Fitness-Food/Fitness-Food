@@ -70,3 +70,12 @@ div.relative {
     font-weight: bold;
     font-size:30px;
 }
+
+body {
+    position: relative;
+    width: 100%;
+    padding:0!important;
+    background-size: 2000px 650px;
+    background-image: url("../assets/pasta_11-scaled-1.jpg");
+    background-repeat: no-repeat;
+  }
