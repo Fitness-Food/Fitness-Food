@@ -52,7 +52,8 @@ const createMealModal = (type, meal) => {
         $(`#${type}_modal_list_${meal.type}`).append(`
             <p>
                 <label> 
-                    <input class="with-gap" value=${index} name="${type}_group_${meal.type}" type="radio" ${index == 0 ? "checked" : ""}/>
+                    <input class="with-gap" value=${index} name="${type}_group_${meal.type}" type="radio" 
+                        ${index == 0 ? "checked" : ""}/>
                     <span>${item.name}</span>
                     <span> - ${item.cal} KJ Cal</span>
                 </label>
@@ -108,6 +109,7 @@ const createMealModal = (type, meal) => {
             $(`#wk_table tr:nth-child(${currentFocusItem.day + 1}) td:nth-child(${mealIndex}) a p:nth-child(1)`).text(meals.sets[value].name)
             $(`#wk_table tr:nth-child(${currentFocusItem.day + 1}) td:nth-child(${mealIndex}) a p:nth-child(2)`).text(meals.sets[value].cal + " KJ")
         }
+        refreshCalCube()
     }
 
     $(`#${type}_switch_${meal.type}_btn`).click(() => cubeClick())
@@ -140,11 +142,25 @@ const calculateDayCal = (plan, meals) => {
             + meals.dinner.sets[plan.din].cal
 }
 
-const calCube = (flag, plan, meals) => {
-    let style = flag ? "cube2" : "cube1"
+const refreshCalCube = () => {
+    let num = 0
+    let id = ''
+    if(currentFocusItem.type === 'day') {
+        id = `#${currentFocusItem.type}_calories_cube`
+        num = calculateDayCal(day_meals_plan, meal_back)
+    } else {
+        id = `#${currentFocusItem.type}_calories_cube_${currentFocusItem.day}`
+        num = calculateDayCal(week_meals_plan[currentFocusItem.day], meal_back)
+    }
+    $(id).text(`${num} KJ`)
+}
+
+const calCube = (type, index, plan, meals) => {
+    let style = (index + 3) % 2 ? "cube2" : "cube1"
+    let dayIndex = type === "day" ? '' : `_${index}`
     return `
         <div class="${style} calCube">
-            <div class="number">${calculateDayCal(plan, meals)} KJ</div>
+            <div id="${type}_calories_cube${dayIndex}" class="number">${calculateDayCal(plan, meals)} KJ</div>
         </div>
     `
 }
@@ -194,14 +210,14 @@ const createWKTr = (plan, index, meals) => {
         <tr> 
             <td>${getWKday(index)}</td>
             ${createMealCells(plan, meals, index)}
-            <td>${calCube((index + 3) % 2, plan, meals)}</td>
+            <td>${calCube('wk', index, plan, meals)}</td>
             ${(index != 6) ? `<td>${empCube()}</td>`: `<td>${ordCube()}</td>`}
         </tr>`
 }
 
 const createWeekTable = (plans, meals) => {
     week_meals_plan = plans
-    plans.map((plan, index) => {
+    week_meals_plan.map((plan, index) => {
         $("#wk_table").append(createWKTr(plan, index, meals))
     })
 }
@@ -217,7 +233,7 @@ const createDayTr = (plan, meals) => {
             <td>${cube("day", 0, meals.breakfast, day)}</td>
             <td>${cube("day", 1, meals.lunch, day)}</td>
             <td>${cube("day", 0, meals.dinner, day)}</td>
-            <td>${calCube(1, plan[day], meals)}</td>
+            <td>${calCube("day", 0, day_meals_plan, meals)}</td>
             <td>${ordCube()}</td>
         </tr>`
     $("#day_table").append(child)
