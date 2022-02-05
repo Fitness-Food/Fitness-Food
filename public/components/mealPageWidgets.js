@@ -1,6 +1,8 @@
 let day_meals_plan = null
 let week_meals_plan = null
 
+let currentFocusItem = null
+
 let meal_back = null
 
 const getWKday = (num) => {
@@ -50,31 +52,73 @@ const createMealModal = (type, meal) => {
         $(`#${type}_modal_list_${meal.type}`).append(`
             <p>
                 <label> 
-                    <input class="with-gap" value=${index} name="group1" type="radio" ${index == 0 ? "checked" : ""}/>
+                    <input class="with-gap" value=${index} name="${type}_group_${meal.type}" type="radio" ${index == 0 ? "checked" : ""}/>
                     <span>${item.name}</span>
                     <span> - ${item.cal} KJ Cal</span>
                 </label>
             </p>`)
     })
 
-    const cubeClick = (type, mtype) => {
-        const value = parseInt($(`input[name='group1']:radio:checked`).val())
-        switch(mtype) {
-            case "brf": //breakfast
-                day_meals_plan.brf = value
-                break;
-            case "lch": //lunch
-                day_meals_plan.lch = value
-                break;
-            case "din": // dinner
-                day_meals_plan.din = value
-                break;
+    const cubeClick = () => {
+        const value = parseInt($(`input[name='${currentFocusItem.type}_group_${currentFocusItem.meal_type}']:radio:checked`).val())
+        let mealIndex = 2
+        let meals = null
+        if(currentFocusItem.type === 'day'){
+            switch(currentFocusItem.meal_type) {
+                case "brf": //breakfast
+                    mealIndex = 2
+                    day_meals_plan.brf = value
+                    meals = meal_back.breakfast
+                    break;
+                case "lch": //lunch
+                    mealIndex = 3
+                    day_meals_plan.lch = value
+                    meals = meal_back.lunch
+                    break;
+                case "din": // dinner
+                    mealIndex = 4
+                    day_meals_plan.din = value
+                    meals = meal_back.dinner
+                    break;
+            }
+        } else if (currentFocusItem.type === 'wk') {
+            switch(currentFocusItem.meal_type) {
+                case "brf": //breakfast
+                    mealIndex = 2
+                    week_meals_plan[currentFocusItem.day].brf = value
+                    meals = meal_back.breakfast
+                    break;
+                case "lch": //lunch
+                    mealIndex = 3
+                    week_meals_plan[currentFocusItem.day].lch = value
+                    meals = meal_back.lunch
+                    break;
+                case "din": // dinner
+                    mealIndex = 4
+                    week_meals_plan[currentFocusItem.day].din = value
+                    meals = meal_back.dinner
+                    break;
+            }
         }
-        $(`#day_table tr td:nth-child(2) a p:nth-child(1)`).text(meal_back.breakfast.sets[value].name)
-        $(`#day_table tr td:nth-child(2) a p:nth-child(2)`).text(meal_back.breakfast.sets[value].cal + " KJ")
+        //brk == 2, lch == 3, din == 4
+        if(currentFocusItem.type === "day") {
+            $(`#day_table tr td:nth-child(${mealIndex}) a p:nth-child(1)`).text(meals.sets[value].name)
+            $(`#day_table tr td:nth-child(${mealIndex}) a p:nth-child(2)`).text(meals.sets[value].cal + " KJ")
+        } else if(currentFocusItem.type === "wk") {
+            $(`#wk_table tr:nth-child(${currentFocusItem.day + 1}) td:nth-child(${mealIndex}) a p:nth-child(1)`).text(meals.sets[value].name)
+            $(`#wk_table tr:nth-child(${currentFocusItem.day + 1}) td:nth-child(${mealIndex}) a p:nth-child(2)`).text(meals.sets[value].cal + " KJ")
+        }
     }
 
-    $(`#${type}_switch_${meal.type}_btn`).click(() => cubeClick(type, meal.type))
+    $(`#${type}_switch_${meal.type}_btn`).click(() => cubeClick())
+}
+
+const setModalPlan = (type, meal_type, day) => {
+    currentFocusItem = {
+        type,
+        meal_type,
+        "day": Number(day)
+    }
 }
 
 //type = day / wk
@@ -82,7 +126,8 @@ const createMealModal = (type, meal) => {
 const cube = (type, sflag, meal, day) => {
     let style = sflag ? "cube2" : "cube1"
     return `
-        <a class="${style} modal-trigger" href="#${type}_meal_modal_${meal.type}">
+        <a class="${style} modal-trigger" href="#${type}_meal_modal_${meal.type}" 
+            onclick="setModalPlan('${type}', '${meal.type}', '${day}')">
             <p id="meal_name" class="title">${meal.sets[day].name}</p>
             <p id="cal" class="number">${meal.sets[day].cal} KJ</p>
         </a>
