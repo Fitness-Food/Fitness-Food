@@ -1,8 +1,7 @@
 const TYPE_D = "day"
 const TYPE_W = "wk"
 const REQ_INIT = "/api/mealInit"
-const REQ_CHECKOUT_DAY = "/api/checkout_day" 
-const REQ_CHECKOUT_WK = "/api/checkout_wk" 
+const REQ_CHECKOUT = "/api/checkout" 
 
 let day_meals_plan = null
 let week_meals_plan = null
@@ -39,15 +38,15 @@ const getWKday = (num) => {
 }
 
 
-const createCheckOutModal = (type) => {
-    let t = type === TYPE_D ? TYPE_D : TYPE_W
-    $(`#${t}_checkout`).append(`
+const createCheckOutModal = () => {
+    
+    $(`#checkout`).append(`
         <div class="modal-content">
-            <h4>${type === TYPE_D? "Day" : "Week"} Checkout:</h4>
+            <h4>Checkout:</h4>
             <hr />
 
             <div class="row">
-                <div id="${t}_list" class="col s12 m7">
+                <div id="list" class="col s12 m7">
                     <table>
                         <thead>
                             <tr>
@@ -60,7 +59,7 @@ const createCheckOutModal = (type) => {
                         </tbody>
                     </table>
                 </div>
-                <div id="${t}_total" class="col s12 m5">
+                <div id="total" class="col s12 m5">
                 </div>
             </div>
             <hr />
@@ -68,53 +67,24 @@ const createCheckOutModal = (type) => {
     `)
 }
 
-const createCheckoutList = (type) => {
-    if(type === TYPE_D) {
+const createChecklist = (list) => {
+    return list.map((item, index) => {
         return `
             <tr>
-                <td>${meal_back.breakfast.sets[day_meals_plan.brf].name}</td>
-                <td>${1}</td>
-                <td>${meal_back.breakfast.sets[day_meals_plan.brf].price}</td>
-            </tr>
-            <tr>
-                <td>${meal_back.lunch.sets[day_meals_plan.lch].name}</td>
-                <td>${1}</td>
-                <td>${meal_back.lunch.sets[day_meals_plan.lch].price}</td>
-            </tr>
-            <tr>
-                <td>${meal_back.dinner.sets[day_meals_plan.din].name}</td>
-                <td>${1}</td>
-                <td>${meal_back.dinner.sets[day_meals_plan.din].price}</td>
+                <td>${item.name}</td>
+                <td>${item.qty}</td>
+                <td>${item.price}</td>
             </tr>
         `
-    } else {
-        return week_meals_plan.map((item, index) => {
-            return `
-                <tr>
-                    <td>${meal_back.breakfast.sets[item.brf].name}</td>
-                    <td>${1}</td>
-                    <td>${meal_back.breakfast.sets[item.brf].price}</td>
-                </tr>
-                <tr>
-                    <td>${meal_back.lunch.sets[item.lch].name}</td>
-                    <td>${1}</td>
-                    <td>${meal_back.lunch.sets[item.lch].price}</td>
-                </tr>
-                <tr>
-                    <td>${meal_back.dinner.sets[item.din].name}</td>
-                    <td>${1}</td>
-                    <td>${meal_back.dinner.sets[item.din].price}</td>
-                </tr>
-            `
-        })
-    }
+    })
 }
 
 const refreshCheckOutMenu = (type) => {
-    let data = type === TYPE_D ? day_meals_plan : week_meals_plan
-    let req = type === TYPE_D ? REQ_CHECKOUT_DAY : REQ_CHECKOUT_WK
+    let data = type === TYPE_D 
+        ? [{brf: day_meals_plan.brf, lch: day_meals_plan.lch, din: day_meals_plan.din}] 
+        : week_meals_plan
     const setting = {
-        "url": req,
+        "url": REQ_CHECKOUT,
         "type": "POST",
         "timeout": 500,
         "headers": {
@@ -123,27 +93,17 @@ const refreshCheckOutMenu = (type) => {
         "data": JSON.stringify(data)
     }
     
-    if(type === TYPE_D) {
-        $.ajax(setting).done((res) => {console.log(res)})
-        $(`#day_checkout #day_list table tbody`).remove()
-        $(`#day_checkout #day_list table`).append(`
+    $.ajax(setting).done((res) => {
+        console.log("-> the checkout result: ", res)
+        $(`#checkout #list table tbody`).remove()
+        $(`#checkout #list table`).append(`
             <tbody>
                 <tr>
-                    ${createCheckoutList(type)}
+                    ${createChecklist(res.checkoutList)}
                 </tr>
             </tbody>
         `)
-    } else {
-        $.ajax(setting).done((res) => {console.log(res)})
-        $(`#wk_checkout #wk_list table tbody`).remove()
-        $(`#wk_checkout #wk_list table`).append(`
-            <tbody>
-                <tr>
-                    ${createCheckoutList(type)}
-                </tr>
-            </tbody>
-        `)
-    }
+    })
 }
 
 //type = day / wk
@@ -287,7 +247,7 @@ const empCube = () => {
 
 const ordCube = (type) => {
     return `
-        <a class="cube1 modal-trigger" href="#${type}_checkout"
+        <a class="cube1 modal-trigger" href="#checkout"
             onclick="refreshCheckOutMenu('${type}')"
         >
             <p class="title">Order</p>

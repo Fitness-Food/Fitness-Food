@@ -23,9 +23,9 @@ router.post("/getPlans", (req, res) => {
     Controller.mealPage.getPlansContent(res)
 })
 
-router.post("/checkout_day", (req, res) => {
-    console.log('-> server recv day checkout req');
-    Controller.mealPage.getDayPayments(req.body, res)
+router.post("/checkout", (req, res) => {
+    console.log('-> server recv checkout req');
+    Controller.mealPage.getPayment(req.body, res)
 })
 
 module.exports = router

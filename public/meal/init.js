@@ -80,8 +80,7 @@ $(document).ready(() => {
             createMealModal(TYPE_D, Meals.dinner)
             createMealModal(TYPE_W, Meals.dinner)
 
-            createCheckOutModal(TYPE_D)
-            createCheckOutModal(TYPE_W)
+            createCheckOutModal()
         })
     })    
 })

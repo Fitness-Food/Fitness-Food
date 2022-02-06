@@ -19,17 +19,16 @@ const getPlansContent = (res) => {
     Service.FFServices.getPlansContent(res)
 }
 
-const getDayPayments = (data, res) => {
-    let checkList = []
+const getPayment = (data, res) => {
+    console.log('-> controller: checkout calculate');
     const meal_back = Service.FFServices.getMealBack()
-    console.log('-> data: ', data);
-    checkList = createChecklist(meal_back, data)
-    res.send({checkList, statusCode: 200})
+    let checkoutList = createChecklist(meal_back, data)
+    res.send({checkoutList, statusCode: 200})
 }
 
 module.exports = {
     getInitContent,
     getMealsContent,
     getPlansContent,
-    getDayPayments
+    getPayment
 }
