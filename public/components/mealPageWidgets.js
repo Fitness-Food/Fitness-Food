@@ -73,7 +73,7 @@ const createChecklist = (list) => {
             <tr>
                 <td>${item.name}</td>
                 <td>${item.qty}</td>
-                <td>${item.price}</td>
+                <td>${item.total}</td>
             </tr>
         `
     })
@@ -137,7 +137,6 @@ const createMealModal = (type, meal) => {
         const value = parseInt($(`input[name='${currentFocusItem.type}_group_${currentFocusItem.meal_type}']:radio:checked`).val())
         let mealIndex = 2
         let meals = null
-        console.log('=========== currentFocusItem: ', currentFocusItem);
         if(currentFocusItem.type === TYPE_D){
             switch(currentFocusItem.meal_type) {
                 case "brf": //breakfast

@@ -7,9 +7,10 @@ const checkRepeat = (arr) => {
         //res[next.id] ? '' : res[next.id] = true && item.push(next)
         if(res[next.id]) { //  repeated
             next.qty++
-            next.price += next.price
+            next.total = next.price * next.qty
         } else { // new
             next.qty = 1
+            next.total = next.price * next.qty
             res[next.id] = true && item.push(next)
         }
         return item
@@ -27,6 +28,7 @@ const createChecklist = (meals, data) => {
 
     tempList.forEach((item) => {
         item.qty = 0
+        item.total = item.price
     })
 
     return checkRepeat(tempList)

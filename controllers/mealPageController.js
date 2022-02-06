@@ -20,7 +20,7 @@ const getPlansContent = (res) => {
 }
 
 const getPayment = (data, res) => {
-    console.log('-> controller: checkout calculate');
+    console.log('-> controller: checkout calculate: ', data);
     const meal_back = Service.FFServices.getMealBack()
     let checkoutList = createChecklist(meal_back, data)
     res.send({checkoutList, statusCode: 200})
