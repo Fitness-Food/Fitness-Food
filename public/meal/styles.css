@@ -27,6 +27,11 @@ th {
     background-color: transparent;
 }
 
+#total_price {
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
 #hero_area {
     position: relative;
     width: 100%;

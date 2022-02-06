@@ -59,6 +59,7 @@ const createCheckOutModal = () => {
                     </table>
                 </div>
                 <div id="total" class="col s12 m5">
+                    <div id="total_price"></div>
                 </div>
             </div>
             <hr />
@@ -102,6 +103,7 @@ const refreshCheckOutMenu = (type) => {
                 </tr>
             </tbody>
         `)
+        $(`#total_price`).text(`Total Price: $${res.total}`)
     })
 }
 

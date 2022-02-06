@@ -14,8 +14,15 @@ const checkRepeat = (arr) => {
             res[next.id] = true && item.push(next)
         }
         return item
-    }, [])
-    
+    }, [])   
+}
+
+const checkoutPrice = (arr) => {
+    let price = 0
+    arr.forEach((item) => {
+        price += item.total
+    })
+    return price.toFixed(2)
 }
 
 const createChecklist = (meals, data) => {
@@ -35,5 +42,6 @@ const createChecklist = (meals, data) => {
 }
 
 module.exports = {
-    createChecklist
+    createChecklist,
+    checkoutPrice
 }
