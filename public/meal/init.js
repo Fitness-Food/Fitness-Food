@@ -1,5 +1,3 @@
-const REQ_INIT = "/api/mealInit"
-
 let weekPlan = null
 let Meals = {
     "breakfast": null,

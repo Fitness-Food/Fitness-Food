@@ -1,4 +1,7 @@
 const Service = require('../services')
+const { createChecklist } =  require('./mealPageFunctions')
+
+let meal_back = null
 
 const getInitContent = (res) => {
     console.log('-> controller: init');
@@ -7,7 +10,8 @@ const getInitContent = (res) => {
 
 const getMealsContent = (res) => {
     console.log('-> controller: meals content');
-    Service.FFServices.getMealsContent(res)
+    meal_back = Service.FFServices.getMealsContent(res)
+    console.log('--> controller: meal back is ', meal_back);
 }
 
 const getPlansContent = (res) => {
@@ -15,8 +19,17 @@ const getPlansContent = (res) => {
     Service.FFServices.getPlansContent(res)
 }
 
+const getDayPayments = (data, res) => {
+    let checkList = []
+    const meal_back = Service.FFServices.getMealBack()
+    console.log('-> data: ', data);
+    checkList = createChecklist(meal_back, data)
+    res.send({checkList, statusCode: 200})
+}
+
 module.exports = {
     getInitContent,
     getMealsContent,
-    getPlansContent
+    getPlansContent,
+    getDayPayments
 }

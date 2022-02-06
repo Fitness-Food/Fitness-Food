@@ -3,6 +3,7 @@ const client = require("../dbConnection")
 let pageCollection = null
 let mealsCollection = null
 let plansCollection = null
+let meal_back = null
 
 const DB_NAME = "Fitness-food"
 const PAGE_COLLECTION = "page_text"
@@ -31,6 +32,7 @@ const getMealsContent = (res) => {
         if(err) {
             throw err
         }
+        meal_back = result
         res.send({result, statusCode: 200})
     })
 }
@@ -45,8 +47,13 @@ const getPlansContent = (res) => {
     })
 }
 
+const getMealBack = () => {
+    return meal_back
+}
+
 module.exports = {
     getInitContent,
     getMealsContent,
-    getPlansContent
+    getPlansContent,
+    getMealBack
 }

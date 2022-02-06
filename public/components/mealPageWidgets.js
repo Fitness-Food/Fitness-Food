@@ -1,11 +1,14 @@
 const TYPE_D = "day"
 const TYPE_W = "wk"
+const REQ_INIT = "/api/mealInit"
+const REQ_CHECKOUT_DAY = "/api/checkout_day" 
+const REQ_CHECKOUT_WK = "/api/checkout_wk" 
 
 let day_meals_plan = null
 let week_meals_plan = null
 let currentFocusItem = null
 let meal_back = null
-let checkoutList = null
+let checkoutList = []
 
 const getWKday = (num) => {
     let wkday = null
@@ -35,9 +38,6 @@ const getWKday = (num) => {
     return `<div class="weekdayCube">${wkday}</div>`
 }
 
-const updateCheckoutList = () => {
-
-}
 
 const createCheckOutModal = (type) => {
     let t = type === TYPE_D ? TYPE_D : TYPE_W
@@ -111,7 +111,20 @@ const createCheckoutList = (type) => {
 }
 
 const refreshCheckOutMenu = (type) => {
+    let data = type === TYPE_D ? day_meals_plan : week_meals_plan
+    let req = type === TYPE_D ? REQ_CHECKOUT_DAY : REQ_CHECKOUT_WK
+    const setting = {
+        "url": req,
+        "type": "POST",
+        "timeout": 500,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "data": JSON.stringify(data)
+    }
+    
     if(type === TYPE_D) {
+        $.ajax(setting).done((res) => {console.log(res)})
         $(`#day_checkout #day_list table tbody`).remove()
         $(`#day_checkout #day_list table`).append(`
             <tbody>
