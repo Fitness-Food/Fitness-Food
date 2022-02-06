@@ -39,7 +39,6 @@ const getWKday = (num) => {
 
 
 const createCheckOutModal = () => {
-    
     $(`#checkout`).append(`
         <div class="modal-content">
             <h4>Checkout:</h4>
@@ -129,6 +128,7 @@ const createMealModal = (type, meal) => {
                         ${index == 0 ? "checked" : ""}/>
                     <span>${item.name}</span>
                     <span> - ${item.cal} KJ Cal</span>
+                    <span> - $${item.price}</span>
                 </label>
             </p>`)
     })
