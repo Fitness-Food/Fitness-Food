@@ -134,6 +134,7 @@ const refreshCheckOutMenu = (type) => {
             </tbody>
         `)
     } else {
+        $.ajax(setting).done((res) => {console.log(res)})
         $(`#wk_checkout #wk_list table tbody`).remove()
         $(`#wk_checkout #wk_list table`).append(`
             <tbody>
@@ -176,6 +177,7 @@ const createMealModal = (type, meal) => {
         const value = parseInt($(`input[name='${currentFocusItem.type}_group_${currentFocusItem.meal_type}']:radio:checked`).val())
         let mealIndex = 2
         let meals = null
+        console.log('=========== currentFocusItem: ', currentFocusItem);
         if(currentFocusItem.type === TYPE_D){
             switch(currentFocusItem.meal_type) {
                 case "brf": //breakfast
@@ -231,7 +233,7 @@ const setModalPlan = (type, meal_type, day) => {
     currentFocusItem = {
         type,
         meal_type,
-        TYPE_D: Number(day)
+        day: Number(day)
     }
 }
 
