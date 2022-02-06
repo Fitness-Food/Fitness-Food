@@ -33,6 +33,99 @@ const getWKday = (num) => {
     return `<div class="weekdayCube">${wkday}</div>`
 }
 
+const createCheckOutModal = (type) => {
+    let t = type === "day" ? "day" : "wk"
+    $(`#${t}_checkout`).append(`
+        <div class="modal-content">
+            <h4>${type === 'day'? "Day" : "Week"} Checkout:</h4>
+            <hr />
+
+            <div class="row">
+                <div id="${t}_list" class="col s12 m7">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Meal</th>
+                                <th>Qyt</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="${t}_total" class="col s12 m5">
+                </div>
+            </div>
+            <hr />
+        </div>
+    `)
+}
+
+const createCheckoutList = (type) => {
+    if(type === "day") {
+        return `
+            <tr>
+                <td>${meal_back.breakfast.sets[day_meals_plan.brf].name}</td>
+                <td>${1}</td>
+                <td>${meal_back.breakfast.sets[day_meals_plan.brf].price}</td>
+            </tr>
+            <tr>
+                <td>${meal_back.lunch.sets[day_meals_plan.lch].name}</td>
+                <td>${1}</td>
+                <td>${meal_back.lunch.sets[day_meals_plan.lch].price}</td>
+            </tr>
+            <tr>
+                <td>${meal_back.dinner.sets[day_meals_plan.din].name}</td>
+                <td>${1}</td>
+                <td>${meal_back.dinner.sets[day_meals_plan.din].price}</td>
+            </tr>
+        `
+    } else {
+        return week_meals_plan.map((item, index) => {
+            return `
+                <tr>
+                    <td>${meal_back.breakfast.sets[item.brf].name}</td>
+                    <td>${1}</td>
+                    <td>${meal_back.breakfast.sets[item.brf].price}</td>
+                </tr>
+                <tr>
+                    <td>${meal_back.lunch.sets[item.lch].name}</td>
+                    <td>${1}</td>
+                    <td>${meal_back.lunch.sets[item.lch].price}</td>
+                </tr>
+                <tr>
+                    <td>${meal_back.dinner.sets[item.din].name}</td>
+                    <td>${1}</td>
+                    <td>${meal_back.dinner.sets[item.din].price}</td>
+                </tr>
+            `
+        })
+    }
+}
+
+const refreshCheckOutMenu = (type) => {
+    if(type === "day") {
+        $(`#day_checkout #day_list table tbody`).remove()
+        $(`#day_checkout #day_list table`).append(`
+            <tbody>
+                <tr>
+                    ${createCheckoutList(type)}
+                </tr>
+            </tbody>
+        `)
+    } else {
+        $(`#wk_checkout #wk_list table tbody`).remove()
+        $(`#wk_checkout #wk_list table`).append(`
+            <tbody>
+                <tr>
+                    ${createCheckoutList(type)}
+                </tr>
+            </tbody>
+        `)
+    }
+}
+
 //type = day / wk
 //mealtype == brf / lch /din
 const createMealModal = (type, meal) => {
@@ -171,9 +264,13 @@ const empCube = () => {
     `
 }
 
-const ordCube = () => {
+const ordCube = (type) => {
     return `
-        <div class="cube1">Order</div>
+        <a class="cube1 modal-trigger" href="#${type}_checkout"
+            onclick="refreshCheckOutMenu('${type}')"
+        >
+            <p class="title">Order</p>
+        </a>
     `
 }
 
@@ -181,7 +278,7 @@ const createDailyTable = res => {
     //cellpadding="0" cellspacing="0"
     return `
         <table>
-            <thread>
+            <thead>
                 <tr>
                     <th></th>
                     <th>BREAKFAST</th>
@@ -190,7 +287,7 @@ const createDailyTable = res => {
                     <th>CALORIES</th>
                     <th></th>
                 </tr>
-            </thread>
+            </thead>
             <tbody id="day_table">
             </tbody>
         </table>
@@ -211,7 +308,7 @@ const createWKTr = (plan, index, meals) => {
             <td>${getWKday(index)}</td>
             ${createMealCells(plan, meals, index)}
             <td>${calCube('wk', index, plan, meals)}</td>
-            ${(index != 6) ? `<td>${empCube()}</td>`: `<td>${ordCube()}</td>`}
+            ${(index != 6) ? `<td>${empCube()}</td>`: `<td>${ordCube("wk")}</td>`}
         </tr>`
 }
 
@@ -234,7 +331,7 @@ const createDayTr = (plan, meals) => {
             <td>${cube("day", 1, meals.lunch, day)}</td>
             <td>${cube("day", 0, meals.dinner, day)}</td>
             <td>${calCube("day", 0, day_meals_plan, meals)}</td>
-            <td>${ordCube()}</td>
+            <td>${ordCube("day")}</td>
         </tr>`
     $("#day_table").append(child)
 }
@@ -242,7 +339,7 @@ const createDayTr = (plan, meals) => {
 const createWeeklyTable = res => {
     return `
         <table>
-            <thread>
+            <thead>
                 <tr>
                     <th></th>
                     <th>BREAKFAST</th>
@@ -251,7 +348,7 @@ const createWeeklyTable = res => {
                     <th>CALORIES</th>
                     <th></th>
                 </tr>
-            </thread>
+            </thead>
             <tbody id="wk_table"></tbody>
         </table>
     `

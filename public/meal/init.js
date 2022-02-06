@@ -81,6 +81,9 @@ $(document).ready(() => {
             createMealModal("wk", Meals.lunch)
             createMealModal("day", Meals.dinner)
             createMealModal("wk", Meals.dinner)
+
+            createCheckOutModal("day")
+            createCheckOutModal("wk")
         })
     })    
 })
