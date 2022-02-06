@@ -1,9 +1,11 @@
+const TYPE_D = "day"
+const TYPE_W = "wk"
+
 let day_meals_plan = null
 let week_meals_plan = null
-
 let currentFocusItem = null
-
 let meal_back = null
+let checkoutList = null
 
 const getWKday = (num) => {
     let wkday = null
@@ -33,11 +35,15 @@ const getWKday = (num) => {
     return `<div class="weekdayCube">${wkday}</div>`
 }
 
+const updateCheckoutList = () => {
+
+}
+
 const createCheckOutModal = (type) => {
-    let t = type === "day" ? "day" : "wk"
+    let t = type === TYPE_D ? TYPE_D : TYPE_W
     $(`#${t}_checkout`).append(`
         <div class="modal-content">
-            <h4>${type === 'day'? "Day" : "Week"} Checkout:</h4>
+            <h4>${type === TYPE_D? "Day" : "Week"} Checkout:</h4>
             <hr />
 
             <div class="row">
@@ -63,7 +69,7 @@ const createCheckOutModal = (type) => {
 }
 
 const createCheckoutList = (type) => {
-    if(type === "day") {
+    if(type === TYPE_D) {
         return `
             <tr>
                 <td>${meal_back.breakfast.sets[day_meals_plan.brf].name}</td>
@@ -105,7 +111,7 @@ const createCheckoutList = (type) => {
 }
 
 const refreshCheckOutMenu = (type) => {
-    if(type === "day") {
+    if(type === TYPE_D) {
         $(`#day_checkout #day_list table tbody`).remove()
         $(`#day_checkout #day_list table`).append(`
             <tbody>
@@ -157,7 +163,7 @@ const createMealModal = (type, meal) => {
         const value = parseInt($(`input[name='${currentFocusItem.type}_group_${currentFocusItem.meal_type}']:radio:checked`).val())
         let mealIndex = 2
         let meals = null
-        if(currentFocusItem.type === 'day'){
+        if(currentFocusItem.type === TYPE_D){
             switch(currentFocusItem.meal_type) {
                 case "brf": //breakfast
                     mealIndex = 2
@@ -175,7 +181,7 @@ const createMealModal = (type, meal) => {
                     meals = meal_back.dinner
                     break;
             }
-        } else if (currentFocusItem.type === 'wk') {
+        } else if (currentFocusItem.type === TYPE_W) {
             switch(currentFocusItem.meal_type) {
                 case "brf": //breakfast
                     mealIndex = 2
@@ -195,10 +201,10 @@ const createMealModal = (type, meal) => {
             }
         }
         //brk == 2, lch == 3, din == 4
-        if(currentFocusItem.type === "day") {
+        if(currentFocusItem.type === TYPE_D) {
             $(`#day_table tr td:nth-child(${mealIndex}) a p:nth-child(1)`).text(meals.sets[value].name)
             $(`#day_table tr td:nth-child(${mealIndex}) a p:nth-child(2)`).text(meals.sets[value].cal + " KJ")
-        } else if(currentFocusItem.type === "wk") {
+        } else if(currentFocusItem.type === TYPE_W) {
             $(`#wk_table tr:nth-child(${currentFocusItem.day + 1}) td:nth-child(${mealIndex}) a p:nth-child(1)`).text(meals.sets[value].name)
             $(`#wk_table tr:nth-child(${currentFocusItem.day + 1}) td:nth-child(${mealIndex}) a p:nth-child(2)`).text(meals.sets[value].cal + " KJ")
         }
@@ -212,7 +218,7 @@ const setModalPlan = (type, meal_type, day) => {
     currentFocusItem = {
         type,
         meal_type,
-        "day": Number(day)
+        TYPE_D: Number(day)
     }
 }
 
@@ -238,7 +244,7 @@ const calculateDayCal = (plan, meals) => {
 const refreshCalCube = () => {
     let num = 0
     let id = ''
-    if(currentFocusItem.type === 'day') {
+    if(currentFocusItem.type === TYPE_D) {
         id = `#${currentFocusItem.type}_calories_cube`
         num = calculateDayCal(day_meals_plan, meal_back)
     } else {
@@ -250,7 +256,7 @@ const refreshCalCube = () => {
 
 const calCube = (type, index, plan, meals) => {
     let style = (index + 3) % 2 ? "cube2" : "cube1"
-    let dayIndex = type === "day" ? '' : `_${index}`
+    let dayIndex = type === TYPE_D ? '' : `_${index}`
     return `
         <div class="${style} calCube">
             <div id="${type}_calories_cube${dayIndex}" class="number">${calculateDayCal(plan, meals)} KJ</div>
@@ -296,9 +302,9 @@ const createDailyTable = res => {
 
 const createMealCells = (plan, meals, index) => {
     return `
-        <td>${cube("wk", index % 2, meals.breakfast, plan.brf)}</td>
-        <td>${cube("wk", (index + 1) % 2, meals.lunch, plan.lch)}</td>
-        <td>${cube("wk", (index + 2) % 2, meals.dinner, plan.din)}</td>
+        <td>${cube(TYPE_W, index % 2, meals.breakfast, plan.brf)}</td>
+        <td>${cube(TYPE_W, (index + 1) % 2, meals.lunch, plan.lch)}</td>
+        <td>${cube(TYPE_W, (index + 2) % 2, meals.dinner, plan.din)}</td>
     `
 }
 
@@ -307,8 +313,8 @@ const createWKTr = (plan, index, meals) => {
         <tr> 
             <td>${getWKday(index)}</td>
             ${createMealCells(plan, meals, index)}
-            <td>${calCube('wk', index, plan, meals)}</td>
-            ${(index != 6) ? `<td>${empCube()}</td>`: `<td>${ordCube("wk")}</td>`}
+            <td>${calCube(TYPE_W, index, plan, meals)}</td>
+            ${(index != 6) ? `<td>${empCube()}</td>`: `<td>${ordCube(TYPE_W)}</td>`}
         </tr>`
 }
 
@@ -327,11 +333,11 @@ const createDayTr = (plan, meals) => {
     let child = `
         <tr>
             <td>${getWKday(day)}</td>
-            <td>${cube("day", 0, meals.breakfast, day)}</td>
-            <td>${cube("day", 1, meals.lunch, day)}</td>
-            <td>${cube("day", 0, meals.dinner, day)}</td>
-            <td>${calCube("day", 0, day_meals_plan, meals)}</td>
-            <td>${ordCube("day")}</td>
+            <td>${cube(TYPE_D, 0, meals.breakfast, day)}</td>
+            <td>${cube(TYPE_D, 1, meals.lunch, day)}</td>
+            <td>${cube(TYPE_D, 0, meals.dinner, day)}</td>
+            <td>${calCube(TYPE_D, 0, day_meals_plan, meals)}</td>
+            <td>${ordCube(TYPE_D)}</td>
         </tr>`
     $("#day_table").append(child)
 }
