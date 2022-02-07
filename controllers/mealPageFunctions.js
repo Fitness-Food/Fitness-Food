@@ -1,16 +1,33 @@
 const { list } = require("mocha/lib/reporters")
 
+const add = (n1, n2) => {
+    let a1 = Number(n1.split('.')[0])
+    let a2 = Number(n1.split('.')[1] ? n1.split('.')[1] : '0')
+    let b1 = Number(n2.split('.')[0])
+    let b2 = Number(n2.split('.')[1] ? n2.split('.')[1] : '0')
+    let t1 = a1 + b1 + parseInt((a2 + b2) / 100)
+    let t2 = (a2 + b2) % 100
+    return `${t1}.${t2}`
+}
+
+const multi = (n1, q) => {
+    let a1 = Number(n1.split('.')[0])
+    let a2 = Number(n1.split('.')[1])
+    let t1 = a1 * q + parseInt((a2 * q) / 100)
+    let t2 = (a2 * q) % 100
+    return `${t1}.${t2}`
+}
+
 const checkRepeat = (arr) => {
     let res = {}
 
     return arr.reduce((item, next) => {
         //res[next.id] ? '' : res[next.id] = true && item.push(next)
         if(res[next.id]) { //  repeated
-            next.qty++
-            next.total = next.price * next.qty
+            next.total = multi((next.price).toString(), ++(next.qty))
         } else { // new
             next.qty = 1
-            next.total = next.price * next.qty
+            next.total = (next.price).toString()
             res[next.id] = true && item.push(next)
         }
         return item
@@ -18,11 +35,12 @@ const checkRepeat = (arr) => {
 }
 
 const checkoutPrice = (arr) => {
-    let price = 0
+    let price = '0.0'
     arr.forEach((item) => {
-        price += item.total
+        //price += item.total
+        price = add(price, item.total)
     })
-    return price.toFixed(2)
+    return price
 }
 
 const createChecklist = (meals, data) => {
@@ -35,7 +53,7 @@ const createChecklist = (meals, data) => {
 
     tempList.forEach((item) => {
         item.qty = 0
-        item.total = item.price
+        item.total = (item.price).toString()
     })
 
     return checkRepeat(tempList)

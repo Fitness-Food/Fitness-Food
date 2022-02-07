@@ -19,7 +19,7 @@ const getPlansContent = (res) => {
 }
 
 const getPayment = (data, res) => {
-    console.log('-> controller: checkout calculate: ', data);
+    console.log('-> controller: checkout calculate');
     const meal_back = Service.FFServices.getMealBack()
     let checkoutList = createChecklist(meal_back, data)
     res.send({checkoutList, total: checkoutPrice(checkoutList),statusCode: 200})
