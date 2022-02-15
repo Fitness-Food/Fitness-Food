@@ -110,7 +110,6 @@ const refreshCheckOutMenu = (type) => {
     }
     
     $.ajax(setting).done((res) => {
-        console.log("-> the checkout result: ", res)
         $(`#checkout #list table tbody`).remove()
         $(`#checkout #list table`).append(`
             <tbody>
@@ -256,9 +255,26 @@ const calCube = (type, index, plan, meals) => {
     `
 }
 
-const empCube = () => {
+const totalCalCube = () => {
     return `
-        <div class=""></div>
+        <div class="cube2 FontType">
+            Total <br/> Calories
+        </div>
+    `
+}
+
+const calTotalCube = () => {
+    let total = week_meals_plan.reduce((all, current) => {
+        return all 
+            + meal_back.breakfast.sets[current.brf].cal 
+            + meal_back.lunch.sets[current.lch].cal 
+            + meal_back.dinner.sets[current.din].cal
+    }, 0)
+
+    return `
+        <div class="cube1 FontType" style="color:white">
+            ${total} KJ
+        </div>
     `
 }
 
@@ -267,7 +283,7 @@ const ordCube = (type) => {
         <a class="cube1 modal-trigger" href="#checkout"
             onclick="refreshCheckOutMenu('${type}')"
         >
-            <p class="title">Order</p>
+            <p class="FontType">Order</p>
         </a>
     `
 }
@@ -306,7 +322,7 @@ const createWKTr = (plan, index, meals) => {
             <td>${getWKday(index)}</td>
             ${createMealCells(plan, meals, index)}
             <td>${calCube(TYPE_W, index, plan, meals)}</td>
-            ${(index != 6) ? `<td>${empCube()}</td>`: `<td>${ordCube(TYPE_W)}</td>`}
+            ${(index != 6) ? `<td></td>`: `<td>${ordCube(TYPE_W)}</td>`}
         </tr>`
 }
 
@@ -315,6 +331,16 @@ const createWeekTable = (plans, meals) => {
     week_meals_plan.map((plan, index) => {
         $("#wk_table").append(createWKTr(plan, index, meals))
     })
+    $("#wk_table").append(`
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>${totalCalCube()}</td>
+            <td>${calTotalCube()}</td>
+        </tr>
+    `)
+
 }
 
 const createDayTr = (plan, meals) => {
