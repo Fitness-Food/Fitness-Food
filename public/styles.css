@@ -80,3 +80,9 @@ body {
     background-repeat: no-repeat;
   }
 
+.logo {
+    padding-top: 100px;
+    width:520px;
+    height: 115px;
+    margin: 0 auto;
+}
