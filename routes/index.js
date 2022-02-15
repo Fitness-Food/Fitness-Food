@@ -28,4 +28,9 @@ router.post("/checkout", (req, res) => {
     Controller.mealPage.getPayment(req.body, res)
 })
 
+router.get("/placeOrder", (req, res) => {
+    console.log('-> server recv place order req')
+    Controller.mealPage.placeOrder(res)
+})
+
 module.exports = router

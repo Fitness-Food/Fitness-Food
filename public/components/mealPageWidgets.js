@@ -64,7 +64,23 @@ const createCheckOutModal = () => {
             </div>
             <hr />
         </div>
+        <div class="modal-footer">
+            <button id="orderCancel_btn" class="modal-close btn waves-effect waves-light brown lighten-3" type="submit" name="action">
+                Cancel
+                <i class="material-icons right">clear</i>
+            </button>
+            <button id="order_btn" class="modal-close btn waves-effect waves-light indigo darken-3" type="submit" name="action">
+                check
+                <i class="material-icons right">check</i>
+            </button>
+        </div>
     `)
+
+    $('#order_btn').click(() => {
+        $.get("/api/placeOrder", res => {
+            console.log('----> placed the order')
+        })
+    })
 }
 
 const createChecklist = (list) => {

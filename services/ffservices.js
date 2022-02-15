@@ -1,19 +1,23 @@
+const { CLOSING } = require("ws")
 const client = require("../dbConnection")
 
 let pageCollection = null
 let mealsCollection = null
 let plansCollection = null
+let orderListCollection = null
 let meal_back = null
 
 const DB_NAME = "Fitness-food"
 const PAGE_COLLECTION = "page_text"
 const MEAL_COLLECTION = "meal_list"
+const ORDER_LIST_COLLECTION = "order_list"
 const ORDER_COLLECTION = "order_combination"
 
 setTimeout(() => {
     pageCollection = client.mongoClient.db(DB_NAME).collection(PAGE_COLLECTION)
     mealsCollection = client.mongoClient.db(DB_NAME).collection(MEAL_COLLECTION)
     plansCollection = client.mongoClient.db(DB_NAME).collection(ORDER_COLLECTION)
+    orderListCollection = client.mongoClient.db(DB_NAME).collection(ORDER_LIST_COLLECTION)
 }, 200);
 
 const getInitContent = (res) => {
@@ -51,9 +55,17 @@ const getMealBack = () => {
     return meal_back
 }
 
+const makeOrder = (data, res) => {
+    orderListCollection.insertOne({data}, (err, result) => {
+        console.log('-> new order req')
+        res.sendStatus(204)
+    })
+}
+
 module.exports = {
     getInitContent,
     getMealsContent,
     getPlansContent,
-    getMealBack
+    getMealBack,
+    makeOrder
 }
