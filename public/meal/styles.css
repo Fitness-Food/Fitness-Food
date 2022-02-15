@@ -19,12 +19,17 @@ th {
     font-size: 1.5rem;
 }
 
-td {
+.temp td {
     height: 120px;
 }
 
 .page-header {
     background-color: transparent;
+}
+
+#total_price {
+    font-size: 1.7rem;
+    font-weight: 600;
 }
 
 #hero_area {
@@ -169,8 +174,4 @@ td {
 }
 .pColor {
     color: white;
-}
-
-.testB {
-    border: 1px red solid;
 }

@@ -23,5 +23,14 @@ router.post("/getPlans", (req, res) => {
     Controller.mealPage.getPlansContent(res)
 })
 
+router.post("/checkout", (req, res) => {
+    console.log('-> server recv checkout req');
+    Controller.mealPage.getPayment(req.body, res)
+})
+
+router.get("/placeOrder", (req, res) => {
+    console.log('-> server recv place order req')
+    Controller.mealPage.placeOrder(res)
+})
 
 module.exports = router

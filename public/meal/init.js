@@ -1,5 +1,3 @@
-const REQ_INIT = "/api/mealInit"
-
 let weekPlan = null
 let Meals = {
     "breakfast": null,
@@ -60,9 +58,9 @@ $(document).ready(() => {
             console.log('-> client get meals data failed!');
             return null
         }
-        Meals.breakfast = {"type": meals_res.result[0].meal_type,"sets": meals_res.result[0].meals}
-        Meals.lunch = {"type": meals_res.result[1].meal_type,"sets": meals_res.result[1].meals}
-        Meals.dinner = {"type": meals_res.result[2].meal_type,"sets": meals_res.result[2].meals}
+        Meals.breakfast = {"type": meals_res.result[0].meal_type, "sets": meals_res.result[0].meals}
+        Meals.lunch = {"type": meals_res.result[1].meal_type, "sets": meals_res.result[1].meals}
+        Meals.dinner = {"type": meals_res.result[2].meal_type, "sets": meals_res.result[2].meals}
 
         $.ajax(post_plans_setting).done((plan_res) => {
             //console.log('---> client get plans data: ', plan_res);
@@ -75,12 +73,14 @@ $(document).ready(() => {
             createDayTr(weekPlan, Meals)
             createWeekTable(weekPlan, Meals)
 
-            createMealModal("day", Meals.breakfast)
-            createMealModal("wk", Meals.breakfast)
-            createMealModal("day", Meals.lunch)
-            createMealModal("wk", Meals.lunch)
-            createMealModal("day", Meals.dinner)
-            createMealModal("wk", Meals.dinner)
+            createMealModal(TYPE_D, Meals.breakfast)
+            createMealModal(TYPE_W, Meals.breakfast)
+            createMealModal(TYPE_D, Meals.lunch)
+            createMealModal(TYPE_W, Meals.lunch)
+            createMealModal(TYPE_D, Meals.dinner)
+            createMealModal(TYPE_W, Meals.dinner)
+
+            createCheckOutModal()
         })
     })    
 })
