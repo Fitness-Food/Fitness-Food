@@ -41,4 +41,7 @@ body {
     font-weight:bold;
 }
 
-
+.menu2 {
+    border:none;
+    border-collapse: hidden;
+}
