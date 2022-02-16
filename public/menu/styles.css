@@ -4,7 +4,7 @@
     background-color: lightgoldenrodyellow;
 }
 
-div.slogan {
+.slogan {
     width: 1000px;
     height: 100px;
     margin: 400px auto;
@@ -23,3 +23,10 @@ body {
     background-image: url("../assets/pasta_01.jpg");
     background-repeat: no-repeat;
   }
+
+.logo {
+    padding-top: 100px;
+    width:520px;
+    height: 115px;
+    margin: 0 auto;
+}
