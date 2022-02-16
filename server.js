@@ -4,11 +4,12 @@ const app = express()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 const routers = require('./routes')
-
 var port = process.env.PORT || 8080
 
 app.use(express.static(__dirname + '/public'))
 app.use(express.json())
+/* 用于解析获取post数据（否则无法获得post数据） */
+app.use(express.urlencoded({ extended: false }));
 app.use('/api', routers)
 
 app.get('/meal', (req, res) => {

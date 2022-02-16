@@ -1,65 +1,123 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="../styles.css" rel="stylesheet">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="../styles.css" rel="stylesheet">
+    <style>
+        main {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
 
-    <body>
-        <header id='nav_bar' class="page-header scrollspy"></header>
-        <main>
+        button,
+        input[type="button"] {
+            font-size: 12px;
+            line-height: 30px;
+            height: 30px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            padding: 0 10px;
+            background-color: #2bbbad;
+            display: inline-block;
+            margin: 10px 30px;
+            color: #333;
+        }
 
-            account name：<input type="text" name="" id="" value="" /> password：
-            <input type="password" name="" id="" value="" />
-            <input type="button" name="" id="btn" value="register" />
-            <button type="button" id="clear">clean</button>
-        </main>
-        <footer id="footer"></footer>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script src="../components/widgets.js"></script>
-        <script src="./init.js"></script>
-    </body>
-    <script type="text/javascript">
-        var aInputs = document.getElementsByTagName('input');
-        var oClear = document.getElementById('clear');
-        var db = openDatabase('zuchedenglu', '1.0', 'textdb', '1024*1024');
-        db.transaction(function(contex) {
-            contex.executeSql('create table if not exists userinf(id unique,name,password)');
+        button:hover,
+        input[type="button"]:hover {
+            opacity: 0.6;
+            cursor: pointer;
+        }
+
+        .fr {
+            float: right;
+            font-size: 12px;
+            line-height: 30px;
+            height: 30px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            padding: 0 10px;
+            background-color: #2bbbad;
+            margin: 10px;
+            color: #333;
+        }
+
+        button:hover,
+        input[type="button"]:hover {
+            opacity: 0.6;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header id='nav_bar' class="page-header scrollspy"></header>
+    <main>
+
+        account name：<input type="text" name="" id="" value="" class="username" value='ccc' /> password：
+        <input type="password" name="" id="" value="" class="password" value="password" />
+        <input type="button" name="" id="btn" value="register" />
+        <button type="button" id="clear">clean</button>
+        <a href="/login" class="fr">back</a>
+    </main>
+    <footer id="footer"></footer>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="../components/widgets.js"></script>
+    <script src="./init.js"></script>
+</body>
+<script type="text/javascript">
+    var aInputs = document.getElementsByTagName('input');
+    var oClear = document.getElementById('clear');
+    var db = openDatabase('zuchedenglu', '1.0', 'textdb', '1024*1024');
+    db.transaction(function (contex) {
+        contex.executeSql('create table if not exists userinf(id unique,name,password)');
+    });
+    var oBtn = document.getElementById('btn');
+    var num = 0;
+    oBtn.onclick = function () {
+        var username = $('.username').val();
+        var password = $('.password').val();
+        if (username == '' || password == '') {
+            alert('Please fill in the complete account password！')
+        } else {
+            $.ajax({
+                type: 'post',
+                data: {
+                    username,
+                    password
+                },
+                url: '/api/register',
+                success: function (data) {
+                    console.log(data)
+                    if (data.code == '000') {
+                        alert(data.msg)
+                        window.location.href = '/login'
+                    } else {
+                        alert(data.msg)
+                    }
+                },
+                err: function (err) {
+                    console.log(err)
+                }
+            })
+        }
+    }
+    oClear.onclick = function () {
+        db.transaction(function (contex) {
+            contex.executeSql('drop table userinf');
         });
-        var oBtn = document.getElementById('btn');
-        var num = 0;
-        oBtn.onclick = function() {
-            if (aInputs[0].value && aInputs[1].value) {
-                db.transaction(function(contex) {
-                    contex.executeSql('select * from userinf', [], function(con, data) {
-                        var leg = data.rows.length,
-                            i;
-                        for (var i = 0; i < leg; i++) {
-                            if (aInputs[0].value == data.rows.item(i).name) {
-                                alert('This username is already registered！');
-                                return;
-                            }
-                        }
-                        num =leg +1;
-                    });
-                    contex.executeSql('insert into userinf(id,name,password) values("' + num + '","' + aInputs[0].value + '","' + aInputs[1].value + '")');
-                    alert('registration success');
-                });
-            } else {
-                alert('Please fill in the complete account password！');
-            }
-        }
-        oClear.onclick=function(){
-            db.transaction(function(contex) {
-                contex.executeSql('drop table userinf');
-            });
-        }
-    </script>
+    }
+</script>
 
 </html>
