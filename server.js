@@ -8,7 +8,7 @@ var port = process.env.PORT || 8080
 
 app.use(express.static(__dirname + '/public'))
 app.use(express.json())
-/* 用于解析获取post数据（否则无法获得post数据） */
+//Used to parse and obtain post data (otherwise, post data cannot be obtained)
 app.use(express.urlencoded({ extended: false }));
 app.use('/api', routers)
 
