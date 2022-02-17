@@ -41,7 +41,15 @@ body {
     font-weight:bold;
 }
 
-.menu2 {
+.menu2 table{
     border:none;
     border-collapse: hidden;
+}
+
+.menu2 tr{
+    border-bottom: none;
+}
+
+.menu2 td{
+    width:500px;
 }
