@@ -9,7 +9,17 @@
 * **Lin**: register & Login page
 
 ---
-## `Home & Menu Page` worked by Kathy
+## `Home & Menu Page` worked by ZHIGUI (Kathy) ZHANG
+
+Home page shows our logo, slogan and two buttons. There provide two button for the user, one is **A DIET PLAN**, another one is **MAKE AN ORDER**.
+1. the user click the **A DIET PLAN**, it turn to the register page.
+2. User can make register in that page.
+3. the user click the **Home** on the navbar, it will back to the homepage.
+4. the user click the **MAKE AN ORDER**, it turn to the menu page.
+5. User can look through our menu and information for the delivery and takeout.
+
+Menu page provide our menu, delivery, takeout information and photos for the food. User can click the **MAKE AN ORDER** on the homepage or **Menu** on the navbar to see our Menu page.
+
 
 Files included
 ``` 
@@ -17,6 +27,10 @@ Files included
     public/components/footer.html
     public/components/mealPageWidgets.js
     meal/*
+    public/index.html
+    public/style.css
+    pulic/menu/index.html
+    pulic/menu/style.css
 ```
 ---
 ## `Server` worked by Tao Pan
