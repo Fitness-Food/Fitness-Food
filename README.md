@@ -68,9 +68,19 @@ Files included
 Files included
 ``` 
     public/login/index.html
+    public/login/init.js
     public/register/index.html
-```
+    public/register/init.js
+``` 
+---
+    ## `register & login Page` worked by Lin
+register page is about that customers allowed register with account name and password.
+1. Once the customer is click the register page, he/she can insert the account name and set a password to register.
+2. Customer can click login Page, the customer can login with the registed account name and password.
+3. After the customer login, the page will turn to menu page for ordering food.
+4. The data of account will be saved to mongodb.
 
+```
 ---
 
 <details>
