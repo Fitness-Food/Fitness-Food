@@ -6,7 +6,7 @@
 
 * **Kathy**: Home / Menu page
 * **Tao Pan**: Server & Meal page
-* **Lin**: Login page
+* **Lin**: register & Login page
 
 ---
 ## `Home & Menu Page` worked by Kathy
@@ -64,6 +64,12 @@ Files included
 
 ---
 ## `Login Page` worked by Lin
+
+Files included
+``` 
+    public/login/index.html
+    public/register/index.html
+```
 
 ---
 
