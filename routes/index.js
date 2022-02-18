@@ -13,12 +13,12 @@ router.get("/mealInit", (req, res) => {
     Controller.mealPage.getInitContent(res)
 })
 
-router.post("/getMeals", (req, res) => {
+router.get("/getMeals", (req, res) => {
     console.log('-> server recv get meals req');
     Controller.mealPage.getMealsContent(res)
 })
 
-router.post("/getPlans", (req, res) => {
+router.get("/getPlans", (req, res) => {
     console.log('-> server recv get plans req');
     Controller.mealPage.getPlansContent(res)
 })

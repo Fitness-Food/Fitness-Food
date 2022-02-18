@@ -241,6 +241,7 @@ const refreshCalCube = () => {
     } else {
         id = `#${currentFocusItem.type}_calories_cube_${currentFocusItem.day}`
         num = calculateDayCal(week_meals_plan[currentFocusItem.day], meal_back)
+        $('#total_calories').text(`${calTotalCalories()} KJ`)
     }
     $(id).text(`${num} KJ`)
 }
@@ -263,16 +264,20 @@ const totalCalCube = () => {
     `
 }
 
-const calTotalCube = () => {
-    let total = week_meals_plan.reduce((all, current) => {
+const calTotalCalories = () => {
+    return week_meals_plan.reduce((all, current) => {
         return all 
             + meal_back.breakfast.sets[current.brf].cal 
             + meal_back.lunch.sets[current.lch].cal 
             + meal_back.dinner.sets[current.din].cal
     }, 0)
+}
+
+const calTotalCube = () => {
+    let total = calTotalCalories()
 
     return `
-        <div class="cube1 FontType" style="color:white">
+        <div id="total_calories" class="cube1 FontType" style="color:white">
             ${total} KJ
         </div>
     `
